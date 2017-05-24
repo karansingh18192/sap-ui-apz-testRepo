@@ -1,0 +1,157 @@
+apz.app.onLoad_Transfer = function() {
+    debugger;
+    var extName = apz.scrMetaData.nodesMap["TransferFunds__i__FundTransferReq"].extName;
+    apz.scrMetaData.nodesMap["TransferFunds__i__FundTransferReq"].extName = extName.replace("ns1:","");
+    apz.scrMetaData.nodesMap["TransferFunds__i__FundTransferReq"].nsAlias = "";
+    
+    var accArr = [],
+        benefArr = [];
+    var option = {};
+    $("#page-body").addClass("pgbody");
+    debugger;
+    benefArr = [{
+        "id": "688XXXXX98",
+        "name": "Michelle"
+    }, {
+        "id": "897XXXXX867",
+        "name": "Jayden"
+    }, {
+        "id": "67XXXXX87898",
+        "name": "Gabrielle"
+    }];
+    var accOptions = [];
+    option = {
+        "val": "",
+        "desc": "- Select an Account -"
+    };
+    accOptions.push(option);
+    try {
+        for (i = 0; i < gAccountsArr.length; i++) {
+            option = {};
+            option.val = gAccountsArr[i];
+            option.desc = gAccountsArr[i];
+            accOptions.push(option);
+        }
+        apz.populateDropdown(document.getElementById("TransferFunds__i__transferGetDetails__fromAccount"), accOptions);
+    } catch (e) {}
+    var benefOptions = [];
+    option = {
+        "val": "",
+        "desc": "- Select A Beneficiary -"
+    };
+    benefOptions.push(option);
+    for (i = 0; i < benefArr.length; i++) {
+        option = {};
+        option.val = benefArr[i].id;
+        option.desc = benefArr[i].name;
+        benefOptions.push(option);
+    }
+    apz.populateDropdown(document.getElementById("TransferFunds__i__transferGetDetails__beneficiaryId"), benefOptions);
+    apz.app.getBeneficiaryDetails();
+    $("#container_form_2,#container_form_4,#section_row_29").hide();
+};
+apz.app.step2 = function() {
+    debugger;
+    /*   */
+    getTransferDetails = {};
+    getTransferDetails.fromAccount = $("#TransferFunds__i__transferGetDetails__fromAccount").val();
+    getTransferDetails.beneficiaryId = $("#TransferFunds__i__transferGetDetails__beneficiaryId").val();
+    transferDate = $("#TransferFunds__i__transferGetDetails__date").val();
+    getTransferDetails.transferAmount = $("#TransferFunds__i__transferGetDetails__transferAmount").val();
+    getTransferDetails.remarks = $("#TransferFunds__i__transferGetDetails__remarks").val();
+    apz.data.scrdata.TransferFunds_Req = {};
+    apz.data.scrdata.TransferFunds_Req.transferFund = {};
+    apz.data.scrdata.TransferFunds_Req.transferFund.FundTransferReq = getTransferDetails;
+    apz.data.loadData(null);
+    $("#container_form_2").show();
+    $("#container_form_1,#container_form_4,#section_row_29").hide();
+    $("#step1_img").attr("src", "apps/com.iexceed.DemoBankPOC/styles/themes/DemoBankPOC/img/step_1.png");
+    $("#step2_img").attr("src", "apps/com.iexceed.DemoBankPOC/styles/themes/DemoBankPOC/img/step_s2.png");
+};
+apz.app.step3 = function() {
+   // var req = {};
+    /*req["ns1:transferFund"] = {};
+    req.transferFund.FundTransferReq = {};
+    req.transferFund.FundTransferReq.beneficiaryId = "1";
+    req.transferFund.FundTransferReq.currency = "INR";
+    req.transferFund.FundTransferReq.fromAccount = "5658018808";
+    req.transferFund.FundTransferReq.remarks = "Rent";
+    req.transferFund.FundTransferReq.transferAmount = "7000";*/
+    //req["ns1:transferFund"] = {};
+    //req["ns1:transferFund"]["FundTransferReq"] = {};
+    //req["ns1:transferFund"]["FundTransferReq"].beneficiaryId = "1";
+    //req["ns1:transferFund"].FundTransferReq.currency = "INR";
+    //req["ns1:transferFund"].FundTransferReq.fromAccount = "5658018808";
+    //req["ns1:transferFund"].FundTransferReq.remarks = "Rent";
+    //req["ns1:transferFund"].FundTransferReq.transferAmount = "7000";
+    //  alert(JSON.stringify(req));
+    //req.FundTransferReq.date=""
+    var lrequest = {};
+    lrequest.ifaceName = "TransferFunds";
+    lrequest.callBackObj = this;
+    lrequest.callBack = apz.app.wsdlCB;
+    lrequest.buildReq = "Y";
+    lrequest.req = "";
+    lrequest.paintResp = "Y";
+    apz.server.callServer(lrequest);
+    /*  apz.data.scrdata.TransferFunds_Req.transferConfirmation = apz.data.scrdata.TransferFunds_Req.transferFund.FundTransferReq;
+    apz.data.loadData(null);
+    $("#container_form_4,#section_row_29").show();
+    $("#container_form_1,#container_form_2").hide();
+    $("#step2_img").attr("src","../styles/DemoBankPOC/img/step_2.png");
+    $("#step3_img").attr("src","../styles/DemoBankPOC/img/step_s3.png");
+    */
+};
+apz.app.wsdlCB = function(presp) {
+    debugger;
+    // alert(JSON.stringify(presp));
+    //Changed By Gowtham (MockServer Integartion)
+    if (presp.res.TransferFunds_Res.transferFundResponse.FundTransferResp.status == "success") {
+        var lobj = new Array();
+        lobj['TransferFunds_Res'] = {};
+        lobj['TransferFunds_Res'] = presp.res['TransferFunds_Res'];
+        apz.data.appendData(lobj);
+        $("#TransferFunds__i__transferConfirmation__fromAccount").text(getTransferDetails.fromAccount);
+        $("#TransferFunds__i__transferConfirmation__beneficiaryId").text(getTransferDetails.beneficiaryId);
+        $("#TransferFunds__i__transferConfirmation__transferAmount").text(getTransferDetails.transferAmount);
+        $("#TransferFunds__i__transferConfirmation__date").text(transferDate);
+        $("#TransferFunds__i__transferConfirmation__remarks").text(getTransferDetails.remarks);
+        $("#container_form_4,#section_row_29").show();
+        $("#container_form_1,#container_form_2").hide();
+        $("#step2_img").attr("src", "apps/com.iexceed.DemoBankPOC/styles/themes/DemoBankPOC/img/step_2.png");
+        $("#step3_img").attr("src", "apps/com.iexceed.DemoBankPOC/styles/themes/DemoBankPOC/img/step_s3.png");
+    } else {
+        var param = {};
+        param.code = "APZ-TRAN-001";
+        param.callBack = "";
+        apz.dispMsg(param);
+    }
+};
+apz.app.getBeneficiaryDetails = function() {
+    var beneficiary_id = $("#TransferFunds__i__transferGetDetails__beneficiaryId").val();
+    if (apz.isNull(beneficiary_id)) {
+        $("#section_row_61").hide();
+    } else {
+        $("#section_row_61").show();
+    }
+};
+apz.app.cancelStep1 = function() {
+    debugger;
+    $("#container_form_1 select,#container_form_1 input").each(function() {
+        $(this).val("");
+    });
+};
+apz.app.cancelStep2 = function() {
+    $("#container_form_2,#container_form_3,#section_row_29").hide();
+    $("#container_form_1").show();
+    apz.app.cancelStep1();
+    $("#section_row_11").hide();
+}
+apz.app.downloadStatement = function() {
+    debugger;
+    var text = $("#container_form_3").text();
+    var blob = new Blob([text], {
+        type: "text/plain;charset=utf-8"
+    });
+    saveAs(blob, "Transaction-Reciept.txt");
+};

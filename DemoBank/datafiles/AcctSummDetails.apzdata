@@ -1,0 +1,78 @@
+{
+    "AcctDetails_Req": {
+        "AccountTxnDetails": [
+            {
+                "Date": "12-Feb-2017",
+                "Description": "Current Bill",
+                "Amount": "9000",
+                "TransactionType": "Debit"
+            },
+            {
+                "Date": "10-Jan-2017",
+                "Description": "Health Insurance Bill",
+                "Amount": "10000",
+                "TransactionType": "Debit"
+            },
+            {
+                "Date": "1-Jan-2017",
+                "Description": "Salary Credited",
+                "Amount": "15000",
+                "TransactionType": "Credit"
+            },
+            {
+                "Date": "24-Dec-2017",
+                "Description": "Transfered to acct 0043xxxx893",
+                "Amount": "5000",
+                "TransactionType": "Debit"
+            },
+            {
+                "Date": "12-Nov-2016",
+                "Description": "Current Bill",
+                "Amount": "9000",
+                "TransactionType": "Debit"
+            },
+            {
+                "Date": "10-Sep-2016",
+                "Description": "Health Insurance Bill",
+                "Amount": "10000",
+                "TransactionType": "Debit"
+            },
+            {
+                "Date": "21-Oct-2016",
+                "Description": "Salary Credited",
+                "Amount": "15000",
+                "TransactionType": "Credit"
+            },
+            {
+                "Date": "24-Jun-2016",
+                "Description": "Transfered to acct 0043xxxx893",
+                "Amount": "5000",
+                "TransactionType": "Debit"
+            },
+            {
+                "Date": "12-Mar-2016",
+                "Description": "Current Bill",
+                "Amount": "9000",
+                "TransactionType": "Debit"
+            },
+            {
+                "Date": "10-Feb-2016",
+                "Description": "Health Insurance Bill",
+                "Amount": "12000",
+                "TransactionType": "Debit"
+            },
+            {
+                "Date": "21-Apr-2015",
+                "Description": "Salary Credited",
+                "Amount": "13000",
+                "TransactionType": "Credit"
+            },
+            {
+                "Date": "24-Dec-2015",
+                "Description": "Transfered to acct 0043xxxx893",
+                "Amount": "5000",
+                "TransactionType": "Debit"
+            }
+        ]
+    }
+}

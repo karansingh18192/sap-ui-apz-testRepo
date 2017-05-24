@@ -1,0 +1,22 @@
+[
+    {
+        "val": "INR",
+        "desc": "INR"
+    },
+    {
+        "val": "USD",
+        "desc": "USD"
+    },
+    {
+        "val": "EUR",
+        "desc": "EUR"
+    },
+    {
+        "val": "GBP",
+        "desc": "GBP"
+    },
+    {
+        "val": "SEK",
+        "desc": "SEK"
+    }
+]

@@ -1,0 +1,10 @@
+{"accountTypes": 
+	[
+		{"type":"Savings", "value":"1"},
+		{"type":"Current", "value":"1"},
+		{"type":"Deposit", "value":"1"},
+		{"type":"Loan", "value":"1"},
+		{"type":"Over draft", "value":"1"},
+		{"type":"Others", "value":"1"}
+	]
+}

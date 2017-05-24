@@ -1,0 +1,22 @@
+[
+    {
+        "val": "BPCL",
+        "desc": "Bharat Gas"
+    },
+    {
+        "val": "Indian",
+        "desc": "Indian Oil"
+    },
+    {
+        "val": "GAIL",
+        "desc": "GAIL"
+    },
+    {
+        "val": "HPCL",
+        "desc": "Hindustan Petrolium Gas(HP Gas)"
+    },
+    {
+        "val": "ONGC",
+        "desc": "ONGC"
+    }
+]
