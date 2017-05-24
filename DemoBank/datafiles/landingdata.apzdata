@@ -1,0 +1,55 @@
+{
+    "LandingPage_Req": {
+        "accountTypes": [
+            {
+                "type": "Savings",
+                "value": "10000"
+            },
+            {
+                "type": "Current",
+                "value": "10000"
+            },
+            {
+                "type": "Deposit",
+                "value": "10000"
+            },
+            {
+                "type": "Loan",
+                "value": "10000"
+            },
+            {
+                "type": "Over draft",
+                "value": "10000"
+            },
+            {
+                "type": "Others",
+                "value": "10000"
+            },
+            {
+                "type": "User",
+                "value": "20000"
+            }
+        ],
+        "accountSummary1": {
+            "AvailBal": "34,345.32",
+            "EffectAvailBal": "80,000.00",
+            "LienAmt": "21,344.43",
+            "Funds": "80,000.00",
+            "FloatBal": "12,111.43"
+        },
+         "accountSummary2": {
+            "AvailBal": "59,345.32",
+            "EffectAvailBal": "80,432.00",
+            "LienAmt": "21,344.43",
+            "Funds": "80,000.00",
+            "FloatBal": "11,412.43"
+        },
+         "accountSummary3": {
+            "AvailBal": "56,345.32",
+            "EffectAvailBal": "80,765.00",
+            "LienAmt": "76,344.43",
+            "Funds": "80,760.00",
+            "FloatBal": "22,654.43"
+        }
+    }
+}
