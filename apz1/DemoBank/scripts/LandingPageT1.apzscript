@@ -1,0 +1,311 @@
+var SavingsAcctArr = [];
+var CurrentAcctArr = [];
+var SavAndCurrAcctArr = [];
+var gRow = "";
+var SummaryChartData = [];
+var gSelectedAcctType = "";
+var gSelectedAcctNo = "";
+var gSelectedAcctBal = "";
+var gAccountsArr = [];
+apz.app.onLoad_LandingPageT1 = function() {
+    debugger;
+    gstopLoader = false;
+    // $('.doughHeight').css('height','');
+    // apz.startLoader();
+    /*  if (apz.app.offline) {
+        apz.data.loadJsonData("landing");
+        $("#savCurr_list_row_0").find(".shownone").removeClass();
+        $("#loanList_row_0").find(".shownone").removeClass();
+        $("#depositList_row_0").find(".shownone").removeClass();
+        SavingsAcctArr = [];
+        CurrentAcctArr = [];
+        var SavAndCurrAcctArr = apz.data.scrdata.AccountsSummary_Req.CustomerInquiry.AccountDetails.SavingsAndCurrentAcctDetails;
+        for (var i = 0; i < SavAndCurrAcctArr.length; i++) {
+            if (SavAndCurrAcctArr[i].AccountType == "Savings") {
+                SavingsAcctArr.push(SavAndCurrAcctArr[i]);
+            } else if (SavAndCurrAcctArr[i].AccountType == "Current") {
+                CurrentAcctArr.push(SavAndCurrAcctArr[i]);
+            }
+        }
+        apz.data.scrdata.AccountsSummary_Req.CustomerInquiry.AccountDetails.SavingsAndCurrentAcctDetails = SavingsAcctArr;
+        apz.data.getContainerData("savCurr_list", 0, "C");
+    } else {*/
+    /*var req = {
+            "CustomerInquiry": {
+                "CIFNo": apz.appglobal.cifno
+            }
+        };*/
+    var req = {
+        "customerId": apz.appglobal.cifno
+    };
+    var lrequest = {};
+    lrequest.ifaceName = "AccountsSummary";
+    lrequest.callBackObj = this;
+    lrequest.callBack = apz.app.AccountsSummaryCB;
+    lrequest.buildReq = "N";
+    lrequest.req = req;
+    lrequest.paintResp = "Y";
+    apz.server.callServer(lrequest);
+    // };
+};
+apz.app.AccountsSummaryCB = function(presp) {
+    debugger;
+    gstopLoader = true;
+    var lobj = new Array();
+    lobj['AccountsSummary_Req'] = {};
+    lobj['AccountsSummary_Req'] = presp.res['AccountsSummary_Res'];
+    apz.data.appendData(lobj);
+    apz.data.loadData('AccountsSummary');
+    SavingsAcctArr = [];
+    CurrentAcctArr = [];
+    try {
+        SavAndCurrAcctArr = apz.data.scrdata.AccountsSummary_Req.CustomerInquiry.AccountDetails.SavingsAndCurrentAcctDetails;
+        if ((SavAndCurrAcctArr.length !== 0) && (SavAndCurrAcctArr.length !== undefined)) {
+            for (var i = 0; i < SavAndCurrAcctArr.length; i++) {
+                if (SavAndCurrAcctArr[i].AccountType == "Savings") {
+                    SavingsAcctArr.push(SavAndCurrAcctArr[i]);
+                } else if (SavAndCurrAcctArr[i].AccountType == "Current") {
+                    CurrentAcctArr.push(SavAndCurrAcctArr[i]);
+                }
+            }
+        }
+    } catch (e) {}
+    apz.data.scrdata.AccountsSummary_Req.CustomerInquiry.AccountDetails.SavingsAndCurrentAcctDetails = SavingsAcctArr;
+    apz.data.getContainerData("savCurr_list", 0, "C");
+    $("#page-body").addClass("pgbody");
+    $("#savCurr_list_row_0").find(".shownone").removeClass();
+    $("#loan_List_row_0").find(".shownone").removeClass();
+    $("#deposit_List_row_0").find(".shownone").removeClass();
+    $("#grid_row_15").addClass("shownone");
+    try {
+        apz.app.common.formatAmount("formatNum");
+    } catch (e) {}
+    try {
+        // create account number arr
+        gAccountsArr = [];
+        if ((SavAndCurrAcctArr.length !== 0) && (SavAndCurrAcctArr.length !== undefined)) {
+            for (var i = 0; i < SavAndCurrAcctArr.length; i++) {
+                gAccountsArr.push(SavAndCurrAcctArr[i].AccountNo);
+            }
+        }
+        if ((apz.data.scrdata.AccountsSummary_Req.CustomerInquiry.AccountDetails.DepositsAcctDetails.length !== 0) && (apz.data.scrdata.AccountsSummary_Req
+            .CustomerInquiry.AccountDetails.DepositsAcctDetails.length !== undefined)) {
+            for (var i = 0; i < apz.data.scrdata.AccountsSummary_Req.CustomerInquiry.AccountDetails.DepositsAcctDetails.length; i++) {
+                gAccountsArr.push(apz.data.scrdata.AccountsSummary_Req.CustomerInquiry.AccountDetails.DepositsAcctDetails[i].AccountNo);
+            }
+        }
+        if ((apz.data.scrdata.AccountsSummary_Req.CustomerInquiry.AccountDetails.LoansAcctDetails.length !== 0) && (apz.data.scrdata.AccountsSummary_Req
+            .CustomerInquiry.AccountDetails.LoansAcctDetails.length !== undefined)) {
+            for (var i = 0; i < apz.data.scrdata.AccountsSummary_Req.CustomerInquiry.AccountDetails.LoansAcctDetails.length; i++) {
+                gAccountsArr.push(apz.data.scrdata.AccountsSummary_Req.CustomerInquiry.AccountDetails.LoansAcctDetails[i].AccountNo);
+            }
+        }
+    } catch (e) {};
+   // $("#SavAndCurrHeadRow_row_").css("background","#DDB758");
+    setTimeout(function() {
+        apz.stopLoader();
+    }, 1000);
+};
+apz.app.preStopLoader = function() {
+    if (apz.isNull(gstopLoader)) {
+        gstopLoader = true;
+    }
+    return gstopLoader;
+}
+apz.app.onShown_LandingPageT1 = function() {};
+apz.app.ListHeadClick = function(obj) {
+    debugger;
+    $("#AcctsummaryChart_chart").addClass("shownone");
+    if ($(obj).parent().parent().parent().find(".shownone").length !== 0) {
+        $(".srow.current").siblings().addClass("shownone");
+        $(obj).parent().parent().next().removeClass('shownone');
+        $(obj).parent().parent().next().next().removeClass('shownone');
+    } else {
+        $(obj).parent().parent().next().addClass('shownone');
+        $(obj).parent().parent().next().next().addClass('shownone');
+    }
+    setTimeout(function() {
+        try {
+            apz.app.common.formatAmount("formatNum");
+        } catch (e) {}
+    }, 10);
+};
+apz.app.updateChartBeforeRender = function(lchartType, lchartData, lid, lchart) {
+    debugger;
+    if (apz.currScr == "LandingPageT1") {
+        var lcolors = ['DDB758','09D68C','DC1A4C','2A58D4','F4904D'];
+        var tempvar = new Array();
+        llabelColor = new Array();
+        if (lid == "doughnutChart") {
+            for (i = 0; i < lchartData.data.length; i++) {
+              //  lchartData.chart.palettecolors = "";
+                lchartData.data[i].label = lchartData.data[i].label + " " + lchartData.data[i].value;
+                lchartData.data[i].value = 1;
+                // var llabel = props.categoryLabel.split(" ")[0];
+                try {
+                    tempvar[lchartData.data[i].label] = lcolors[i];
+                    llabelColor[lchartData.data[i].label.split(" ")[0]] = lcolors[i];
+                } catch (e) {}
+            }
+            var user = {
+                "label": "User",
+                "value": "2"
+            };
+            try {
+                $("#savCurr_list").find('.current').css("background", "#" + llabelColor.Savings);
+              //  $("#SavAndCurrHeadRow_row_").css("background", "#" + llabelColor.Savings);
+            } catch (e) {}
+            lchartData.data.push(user);
+            debugger;
+            FusionCharts("doughnutChart").addEventListener("dataPlotClick", function(ev, props) {
+                debugger;
+                var llabel = props.categoryLabel.split(" ")[0];
+                if (llabel == "Savings") {
+                    apz.data.scrdata.AccountsSummary_Req.CustomerInquiry.AccountDetails.SavingsAndCurrentAcctDetails = SavingsAcctArr;
+                    apz.data.getContainerData("savCurr_list", 0, "C");
+                    $("#savCurr_list").removeClass("shownone");
+                    $("#loan_List").addClass("shownone");
+                    $("#deposit_List").addClass("shownone");
+                    $(".srow.current").siblings().addClass("shownone");
+                    $("#savCurr_list_row_0").find(".shownone").removeClass();
+                   // $("#SavAndCurrHeadRow_row_").css("background", "#" + tempvar[props.categoryLabel]);
+                    $("#savCurr_list").find('.current').css("background", "#" + llabelColor.Savings);
+                } else if (llabel == "Current") {
+                    apz.data.scrdata.AccountsSummary_Req.CustomerInquiry.AccountDetails.SavingsAndCurrentAcctDetails = CurrentAcctArr;
+                    apz.data.getContainerData("savCurr_list", 0, "C");
+                    $("#savCurr_list").removeClass("shownone");
+                    $("#loan_List").addClass("shownone");
+                    $("#deposit_List").addClass("shownone");
+                    $(".srow.current").siblings().addClass("shownone");
+                    $("#savCurr_list_row_0").find(".shownone").removeClass();
+                  //  $("#SavAndCurrHeadRow_row_").css("background", "#" + tempvar[props.categoryLabel]);
+                    
+                    $("#savCurr_list").find('.current').css("background", "#" + llabelColor.Current);
+                } else if (llabel == "Deposits") {
+                    $("#savCurr_list").addClass("shownone");
+                    $("#loan_List").addClass("shownone");
+                    $("#deposit_List").removeClass("shownone");
+                    $(".srow.current").siblings().addClass("shownone");
+                    $("#deposit_List_row_0").find(".shownone").removeClass();
+                   // $("#DepositsListHeadRow_row_").css("background", "#" + tempvar[props.categoryLabel]);
+                    
+                    $("#deposit_List").find('.current').css("background", "#" + llabelColor.Deposits);
+                } else if (llabel == "Loans") {
+                    $("#savCurr_list").addClass("shownone");
+                    $("#loan_List").removeClass("shownone");
+                    $("#deposit_List").addClass("shownone");
+                    $(".srow.current").siblings().addClass("shownone");
+                    $("#loan_List_row_0").find(".shownone").removeClass();
+                   // $("#LoansListHeadRow_row_").css("background", "#" + tempvar[props.categoryLabel]);
+                    
+                    $("#loan_List").find('.current').css("background", "#" + llabelColor.Loans);
+                    
+                }
+                setTimeout(function() {
+                    try {
+                        apz.app.common.formatAmount("formatNum");
+                    } catch (e) {}
+                }, 10);
+            });
+        } else if (lid == "AcctsummaryChart") {
+            debugger;
+            lchartData.data.push(SummaryChartData);
+            $(".appendChart").next().html("");
+            debugger;
+            if (!apz.isNull(gRow)) {
+                debugger;
+                setTimeout(function() {
+                    var a = gRow.children().children()[1]
+                    $(a).addClass("appendChart")
+                    var htm = $("#AcctsummaryChart_chart").html();
+                    $(".appendChart").append(htm);
+                    $(".appendChart").next().addClass("shownone")
+                }, 3000);
+            }
+        }
+    }
+};
+apz.app.viewAcctDetails = function(obj) {
+    debugger;
+    gSelectedAcctType = $(obj).parent().parent().parent().parent().children().find("h5").text();
+    gSelectedAcctNo = $(obj).parent().parent().parent().parent().children().find("h5").siblings().text();
+    gSelectedAcctBal = $(obj).parent().parent().find(".formatNum").text();
+    try {
+        if (!apz.loMap.AcctDetails) {
+            var param = {};
+            param.code = "APZ-SCRN-001";
+            param.callBack = "";
+            apz.dispMsg(param);
+        } else {
+            apz.launchScreen('AcctDetails');
+        }
+    } catch (e) {}
+};
+apz.app.showChartSummary = function(obj) {
+    debugger;
+    if ($(".appendChart").length !== 0) {
+        $(".appendChart").next().removeClass("shownone");
+        $(".appendChart").parent().find('.fusioncharts-container').remove()
+    } else {
+        gRow = $(obj).parent().parent().parent().parent();
+        $("#AcctsummaryChart_chart").removeClass("shownone");
+        var rowClicked = $(obj).parent().parent().parent().parent().attr('id').split('_')[3];
+        var clickedListID = $(obj).parent().parent().parent().parent().attr('id').split('_')[0];
+        var labelArr = [];
+        $(obj).parent().parent().next().find('p').each(function() {
+            var label = $(this).attr('id').split("_")[6];
+            labelArr.push(label);
+        });
+        debugger;
+        var SummaryChartData = [];
+        if (clickedListID == "deposit") {
+            for (var i = 0; i < labelArr.length; i++) {
+                var pdata = 'apz.data.scrdata.AccountsSummary_Req.CustomerInquiry.AccountDetails.DepositsAcctDetails[rowClicked].' + labelArr[i];
+                var chartObj = {
+                    "label": labelArr[i],
+                    "value": eval(pdata)
+                };
+                SummaryChartData.push(chartObj);
+            }
+        } else if (clickedListID == "savCurr") {
+            for (var i = 0; i < labelArr.length; i++) {
+                var pdata = 'apz.data.scrdata.AccountsSummary_Req.CustomerInquiry.AccountDetails.SavingsAndCurrentAcctDetails[rowClicked].' +
+                    labelArr[i];
+                var chartObj = {
+                    "label": labelArr[i],
+                    "value": eval(pdata)
+                };
+                SummaryChartData.push(chartObj);
+            }
+        } else if (clickedListID == "loan") {
+            for (var i = 0; i < labelArr.length; i++) {
+                var pdata = 'apz.data.scrdata.AccountsSummary_Req.CustomerInquiry.AccountDetails.LoansAcctDetails[rowClicked].' + labelArr[i];
+                var label = labelArr[i];
+                var chartObj = {
+                    "label": labelArr[i],
+                    "value": eval(pdata)
+                };
+                SummaryChartData.push(chartObj);
+            }
+        }
+        apz.data.scrdata.AccntSummaryChartDummy_Req = {};
+        apz.data.scrdata.AccntSummaryChartDummy_Req.SummaryChartData = SummaryChartData;
+        apz.data.loadData("AccntSummaryChartDummy");
+    }
+};
+
+apz.app.launchTransfer = function(){
+   // apz.launchScreen('Transfer');
+    
+    try {
+        if (!apz.loMap.Transfer) {
+            var param = {};
+            param.code = "APZ-SCRN-001";
+            param.callBack = "";
+            apz.dispMsg(param);
+        } else {
+            apz.launchScreen('Transfer');
+        }
+    } catch (e) {}
+    
+}

@@ -1,0 +1,1 @@
+{"typeclass":"SCREEN","name":"ISO","type":"SCREEN","childs":[],"screendescription":"New Screen","interfaces":[{"name":"BillPayment","request":"Y","response":"Y","fault":"N"}],"id":[{"devicegroup":"All","portraitlo":"NewLayout","landscapelo":"NewLayout"}]}
