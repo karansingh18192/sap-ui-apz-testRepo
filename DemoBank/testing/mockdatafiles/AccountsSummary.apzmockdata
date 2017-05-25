@@ -1,0 +1,92 @@
+{
+    "CustomerInquiry": {
+        "CIFNo": "123",
+        "AccountSummary": [
+            {
+                "AccountType": "Savings",
+                "AccountBalance": "1235"
+            },
+            {
+                "AccountType": "Current",
+                "AccountBalance": "1000"
+            },
+            {
+                "AccountType": "Deposits",
+                "AccountBalance": "1000"
+            },
+            {
+                "AccountType": "Loans",
+                "AccountBalance": "1000"
+            }
+        ],
+        "AccountDetails": {
+            "SavingsAndCurrentAcctDetails": [
+                {
+                    "AccountType": "Savings",
+                    "AccountNo": "1408XXXXXX8796",
+                    "AccountBalance": "30000",
+                    "WithdrawableBalance": "20000",
+                    "ClosingBalance": "2123",
+                    "LineAmount": "45",
+                    "FundsinClearing": "10000"
+                },
+                {
+                    "AccountType": "Savings",
+                    "AccountNo": "1408XXXXXX6453",
+                    "AccountBalance": "25000",
+                    "WithdrawableBalance": "10000",
+                    "ClosingBalance": "234",
+                    "LineAmount": "456",
+                    "FundsinClearing": "10000"
+                },
+                {
+                    "AccountType": "Current",
+                    "AccountNo": "1408XXXXXX3524",
+                    "AccountBalance": "30000",
+                    "WithdrawableBalance": "20000",
+                    "ClosingBalance": "329832",
+                    "LineAmount": "234",
+                    "FundsinClearing": "10000"
+                }
+            ],
+            "LoansAcctDetails": [
+                {
+                    "AccountType": "Loan",
+                    "AccountNo": "1408XXXXXX9544",
+                    "BookBalance": "30000",
+                    "AvailableBalance": "20000",
+                    "Limit": "56",
+                    "LineAmount": "6767",
+                    "RateOfInterest": "10%"
+                },
+                {
+                    "AccountType": "Loan",
+                    "AccountNo": "1408XXXXXX9292",
+                    "BookBalance": "30000",
+                    "AvailableBalance": "20000",
+                    "Limit": "56",
+                    "LineAmount": "6767",
+                    "RateOfInterest": "10%"
+                }
+            ],
+            "DepositsAcctDetails": [
+                {
+                    "AccountType": "Deposits",
+                    "AccountNo": "1408XXXXXX2222",
+                    "Amount": "30000",
+                    "MaturityAmount": "20000",
+                    "MaturityDate": "12-12-2016",
+                    "RateOfInterest": "11%"
+                },
+                {
+                    "AccountType": "Deposits",
+                    "AccountNo": "1408XXXXXX0909",
+                    "Amount": "30000",
+                    "MaturityAmount": "20000",
+                    "MaturityDate": "12-12-2016",
+                    "RateOfInterest": "11%"
+                }
+            ]
+        }
+    }
+}
