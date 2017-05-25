@@ -1,0 +1,104 @@
+apz.app.onLoad_AcctDetails = function() {
+    debugger;
+    $("#page-body").addClass("pgbody");
+    $("#AccDetail_accNo").text(gSelectedAcctNo);
+    $("#AccDetail_availBal").text(gSelectedAcctBal);
+    var req = {};
+    req.AccountNo = gSelectedAcctNo;
+   // req.AccountType = gSelectedAcctType;
+    
+    var lrequest = {};
+    lrequest.ifaceName = "AcctDetails";
+    lrequest.callBackObj = this;
+    lrequest.callBack = apz.app.AcctDetailsCB;
+    lrequest.buildReq = "N";
+    lrequest.req = req;
+    lrequest.paintResp = "Y";
+    apz.server.callServer(lrequest);
+};
+apz.app.AcctDetailsCB = function(presp) {
+    debugger;
+    /*var lobj = new Array();
+    lobj['AcctDetails_Res'] = {};
+    lobj['AcctDetails_Res'] = presp.res['AcctDetails_Res'];
+   // lobj['AcctDetails_Res'].chart = lobj['AcctDetails_Res'].AccountTxnDetails;
+    apz.data.appendData(lobj);
+    apz.data.loadData('AcctDetails');*/
+   for(i=0;i<apz.data.scrdata.AcctDetails_Res.AccountTxnDetails.length;i++){
+       if(apz.data.scrdata.AcctDetails_Res.AccountTxnDetails[i].TransactionType == "Credit"){
+          // $("#AcctDetails__i__AccountTxnDetails__TransactionType_"+i).removeClass("icon-arrow-up").addClass("icon-arrow-down");
+           $("#AcctDetails__o__AccountTxnDetails__TransactionType_"+i).removeClass("icon-arrow-up").addClass("icon-arrow-down");
+       }
+   }
+  // apz.app.AcctDetailsChartCB(presp);
+}
+/*apz.app.transactionFilter = function() {
+    debugger;
+    // Server Call (MOCK Server)
+    var req = {
+        "AccountNo": "",
+        "AccountType": "",
+        "TimePeriod": ""
+    };
+    var lrequest = {};
+    lrequest.ifaceName = "AcctDetails_Query";
+    lrequest.callBackObj = this;
+    lrequest.callBack = apz.app.AcctDetailsChartCB;
+    lrequest.buildReq = "N";
+    lrequest.req = req;
+    lrequest.paintResp = "Y";
+    apz.server.callServer(lrequest);
+}*/
+apz.app.AcctDetailsChartCB = function(presp) {
+    debugger;
+  /*  var lobj = new Array();
+    lobj['AcctDetails_Res'] = {};
+    lobj['AcctDetails_Res'] = presp.res['AcctDetails_Res'];
+    apz.data.appendData(lobj);
+    apz.data.loadData('AcctDetails');*/
+    var filteredTransactions = [];
+    var filterVal = $('#transaction_filter option:selected').val();
+    if (!apz.isNull(filterVal)) {
+        filterVal = parseInt($('#transaction_filter option:selected').val());
+        var currDate = new Date().toLocaleDateString();
+        for (i = 0; i < apz.data.scrdata.AcctDetails_Req.AccountTxnDetails.length; i++) {
+            totDiff = 0;
+            date2 = apz.data.scrdata.AcctDetails_Req.AccountTxnDetails[i]["Date"].split('-');
+            transDate = date2[0] + '/' + date2[1] + '/' + date2[2];
+            transDate = new Date(transDate).toLocaleDateString();
+            diffYears = currDate.split('/')[2] - transDate.split('/')[2];
+            diffMonths = currDate.split('/')[2] - transDate.split('/')[2];
+            if (currDate.split('/')[1] < transDate.split('/')[1]) {
+                totDiff = (diffYears - 1) * 12;
+                totDiff += 12 - Math.abs(currDate.split('/')[1] - transDate.split('/')[1]);
+            } else {
+                totDiff = diffYears * 12;
+                totDiff += currDate.split('/')[1] - transDate.split('/')[1];
+            }
+            if (totDiff <= filterVal) {
+                filteredTransactions.push(apz.data.scrdata.AcctDetails_Req.AccountTxnDetails[i]);
+            }
+        }
+        debugger;
+        for(j=0;j<filteredTransactions.length;j++){
+            tempDate = filteredTransactions[j]["Date"].split('-').join('/');
+            tempDate = new Date(tempDate).toLocaleString('en-GB').split(',')[0];
+            tempDate = tempDate.split('/');
+            tempDate[2] = tempDate[2].substring(2, 4);
+            filteredTransactions[j]["Date"] = tempDate.join('-');
+        }
+        apz.data.scrdata.AcctDetails_Req.AccountTxnDetails = filteredTransactions;
+        apz.data.loadData(null);
+        var filterText = $('#transaction_filter option:selected').text();
+        $("#trans_range").text("Last " +filterText+" transactions");
+    }
+};
+
+apz.app.getRangeTransaction = function(){
+    debugger;
+    var fromDate = $("#fromDate").val();
+    var toDate = $("#toDate").val();
+    $("#trans_range").text(fromDate + " to " + toDate);
+    
+    
+}

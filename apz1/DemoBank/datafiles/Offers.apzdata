@@ -1,0 +1,36 @@
+{
+    "Offers_Res": [
+        {
+            "offercode": "Use promocode to get 25% cash back",
+            "code": "HAE25"
+        },
+        {
+            "offercode": "Use promocode to get 20% cash back",
+            "code": "HAE20"
+        },
+        {
+            "offercode": "Use promocode to get 50% cash back",
+            "code": "HAE50"
+        },
+        {
+            "offercode": "Use promocode to get 35% cash back",
+            "code": "HAE35"
+        },
+        {
+            "offercode": "Use promocode to get 25% cash back",
+            "code": "HUA25"
+        },
+        {
+            "offercode": "Use promocode to get 30% cash back",
+            "code": "HUA30"
+        },
+        {
+            "offercode": "Use promocode to get 40% cash back",
+            "code": "HUA40"
+        },
+        {
+            "offercode": "Use promocode to get 40% cash back",
+            "code": "HAE40"
+        }
+    ]
+}

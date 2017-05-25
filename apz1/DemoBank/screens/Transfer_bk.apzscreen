@@ -1,0 +1,1 @@
+{"typeclass":"SCREEN","name":"Transfer_bk","type":"SCREEN","childs":[],"screendescription":"New Screen","interfaces":[{"name":"TransferFunds_bk","request":"Y","response":"Y","fault":"N"}],"id":[{"devicegroup":"All","portraitlo":"NewLayout","landscapelo":"NewLayout"}]}

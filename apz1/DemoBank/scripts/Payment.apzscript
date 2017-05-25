@@ -1,0 +1,140 @@
+ apz.app.onLoad_Payment = function() {
+     debugger;
+     apz.app.mobile();
+     $("#page-body").addClass("pgbody");
+     var req = {
+        "Offers": {
+            "OfferNo": ""
+        }
+    };
+    var lrequest = {};
+    lrequest.ifaceName = "Offers";
+    lrequest.callBackObj = this;
+    lrequest.callBack = apz.app.getoffersCB;
+    lrequest.buildReq = "Y";
+    lrequest.req = req;
+    lrequest.paintResp = "Y";
+    apz.server.callServer(lrequest);
+};
+
+apz.app.getoffersCB = function(presp) {
+    debugger;
+    var lobj = new Array();
+    lobj['Offers_Res'] = {};
+    lobj['Offers_Res'] = presp.res['Offers_Res'];
+    apz.data.appendData(lobj);
+    apz.data.loadData('Offers');
+    // apz.data.loadJsonData("Offers");
+
+ };
+ 
+ apz.app.mobile = function() {
+     $('#radioBtn_option_One_span_').text('Postpaid');
+     $('#radioBtn_option_Two_span_').text('Prepaid');
+     $("#accountID_lbl").text("Phone Number");
+     var pobj = $("#serviceProvider_div")[0];
+     //var DF = apz.getFile(apz.getDataFilesPath() + "/Payments.json")
+     var mobile = [{
+         "val": "Airtel",
+         "desc": "Airtel"
+     }, {
+         "val": "Vodafone",
+         "desc": "Vodafone"
+     }, {
+         "val": "TataDocomo",
+         "desc": "Tata Docomo"
+     }, {
+         "val": "Relience",
+         "desc": "Relience"
+     }, {
+         "val": "Idea",
+         "desc": "Idea"
+     }, {
+         "val": "Uninor",
+         "desc": "Uninor"
+     }]
+     apz.populateDropdown(pobj, mobile);
+     //apz.store("fn", "Mobile");
+ };
+ apz.app.electricity = function() {
+     $('#radioBtn_option_One_span_').text('Government');
+     $('#radioBtn_option_Two_span_').text('Private');
+     $("#accountID_lbl").text("Consumer Number");
+     var pobj = $("#serviceProvider_div")[0];
+     var electricity = [{
+         "val": "NPC",
+         "desc": "Nuclear Power Corporation of India"
+     }, {
+         "val": "NHPC",
+         "desc": "NHPC Limited"
+     }, {
+         "val": "NTPC",
+         "desc": "NTPC Limited"
+     }, {
+         "val": "KPCL",
+         "desc": "Karnataka Power Corporation Limited"
+     }, {
+         "val": "UP",
+         "desc": "Uttar Pradesh Rajya Vidyut Utpadan Nigam"
+     }, {
+         "val": "Maharashtra",
+         "desc": "Maharashtra State Electricity Board"
+     }]
+     apz.populateDropdown(pobj, electricity);
+     //apz.store("fn", "Electricity");
+ };
+ apz.app.internet = function() {
+     $('#radioBtn_option_One_span_').text('Postpaid');
+     $('#radioBtn_option_Two_span_').text('Postpaid');
+     $("#accountID_lbl").text("Consumer ID");
+     var pobj = $("#serviceProvider_div")[0];
+     var mobile = [{
+         "val": "Airtel",
+         "desc": "Airtel"
+     }, {
+         "val": "Vodafone",
+         "desc": "Vodafone"
+     }, {
+         "val": "TataDocomo",
+         "desc": "Tata Docomo"
+     }, {
+         "val": "Relience",
+         "desc": "Relience"
+     }, {
+         "val": "Idea",
+         "desc": "Idea"
+     }, {
+         "val": "Uninor",
+         "desc": "Uninor"
+     }]
+     apz.populateDropdown(pobj, mobile);
+     //apz.store("fn", "Internet");
+ };
+ apz.app.gas = function() {
+     $('#radioBtn_option_One_span_').text('Government');
+     $('#radioBtn_option_Two_span_').text('Private');
+     $("#accountID_lbl").text("Consumer Number");
+     var pobj = $("#serviceProvider_div")[0];
+     var gas = [{
+         "val": "BPCL",
+         "desc": "Bharat Gas"
+     }, {
+         "val": "Indian",
+         "desc": "Indian Oil"
+     }, {
+         "val": "GAIL",
+         "desc": "GAIL"
+     }, {
+         "val": "HPCL",
+         "desc": "Hindustan Petrolium Gas(HP Gas)"
+     }, {
+         "val": "ONGC",
+         "desc": "ONGC"
+     }]
+     apz.populateDropdown(pobj, gas);
+     //apz.store("fn", "Gas");
+ };
+ apz.app.PayBill = function() {
+     apz.launchScreen("ISO", "")
+ }
+ 
