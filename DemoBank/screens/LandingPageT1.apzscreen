@@ -1,1 +1,0 @@
-{"typeclass":"SCREEN","name":"LandingPageT1","type":"SCREEN","childs":[],"screendescription":"New Screen","interfaces":[{"name":"AccountsSummary","request":"Y","response":"Y","fault":"N"},{"name":"AccntSummaryChartDummy","request":"Y","response":"Y","fault":"N"}],"id":[{"devicegroup":"All","portraitlo":"NewLayout","landscapelo":"NewLayout"}]}
