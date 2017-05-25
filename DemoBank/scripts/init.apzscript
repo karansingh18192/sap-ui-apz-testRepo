@@ -1,6 +1,0 @@
-apz.app.loginT1 = {};
-apz.app.common ={};
-apz.appglobal = {};
-apz.app.offline = false;
-gstopLoader = true;
-//apz.mockServer = false;

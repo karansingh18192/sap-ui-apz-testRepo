@@ -1,8 +1,0 @@
-{
-    "transferFundResponse": {
-        "FundTransferResp":{
-            "referenceNo":"TXN00087545",
-            "status":"success"
-        }
-    }
-}
